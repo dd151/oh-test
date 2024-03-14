@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="none" name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <listeners>
+    <listener class-name="com.ohrm.listeners.TestListener"/>
+  </listeners>
+  <test thread-count="5" parallel="true" name="Test">
+    <groups>
+      <run>
+        <include name="Sanity"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.ohrm.tests.LoginTest"/>
+    </classes>
+  </test> <!-- Test -->
+  <test parallel="true" name="Test(failed)">
+    <groups>
+      <run>
+        <include name="Sanity"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.ohrm.tests.LoginTest">
+        <methods>
+          <include name="loginTest_MissingCreds" invocation-numbers="0 1 2"/>
+        </methods>
+      </class> <!-- com.ohrm.tests.LoginTest -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

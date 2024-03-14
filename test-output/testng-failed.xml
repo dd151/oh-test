@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="Failed suite [Sanity-Suite]" guice-stage="DEVELOPMENT">
+  <listeners>
+    <listener class-name="com.ohrm.listeners.TestListener"/>
+  </listeners>
+  <groups>
+    <run>
+      <include name="Smoke"/>
+    </run>
+  </groups>
+  <test name="Login">
+    <classes>
+      <class name="com.ohrm.tests.LoginTest"/>
+    </classes>
+  </test> <!-- Login -->
+  <test name="Logout">
+    <classes>
+      <class name="com.ohrm.tests.LogoutTest"/>
+    </classes>
+  </test> <!-- Logout -->
+</suite> <!-- Failed suite [Sanity-Suite] -->
