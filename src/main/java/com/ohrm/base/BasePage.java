@@ -33,7 +33,7 @@ public class BasePage {
 			String message = "Clicking on Element: " + name;
 			ReportTestManager.logMessage(message);
 			el.click();
-		}else {
+		} else {
 			String message = "Unable to Locate Element: " + name;
 			ReportTestManager.logMessage(message);
 			return;
@@ -49,7 +49,7 @@ public class BasePage {
 			el.clear();
 			ReportTestManager.logMessage(message2);
 			el.sendKeys(text);
-		}else {
+		} else {
 			String message = "Unable to Locate Element: " + name;
 			ReportTestManager.logMessage(message);
 			return;
@@ -57,12 +57,10 @@ public class BasePage {
 	}
 
 	protected boolean isDisplayed(WebElement el, String name) {
-		try {
-			String message = "Waiting for Visibility of Element: " + name;
-			ReportTestManager.logMessage(message);
-			WebElement visibleEL = waitForVisibility(el, 10, name);
-			return visibleEL.isDisplayed();
-		} catch (TimeoutException e) {
+		WebElement visibleEl = waitForVisibility(el, 20, name);
+		if (visibleEl != null) {
+			return visibleEl.isDisplayed();
+		} else {
 			String message = "Unable to Locate Element: " + name;
 			ReportTestManager.logMessage(message);
 			return false;
@@ -70,6 +68,8 @@ public class BasePage {
 	}
 
 	protected WebElement waitForVisibility(WebElement el, long seconds, String name) {
+		String message = "Waiting for Visibility of Element: " + name;
+		ReportTestManager.logMessage(message);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
 		return wait.until(ExpectedConditions.visibilityOf(el));
 	}
@@ -81,7 +81,7 @@ public class BasePage {
 					+ "\" with attribute-value: \"" + attributeValue + "\"";
 			ReportTestManager.logMessage(message);
 			return el.getAttribute(attributeName).contains(attributeValue);
-		}else {
+		} else {
 			String message = "Unable to Locate Element: " + name;
 			ReportTestManager.logMessage(message);
 			return false;
