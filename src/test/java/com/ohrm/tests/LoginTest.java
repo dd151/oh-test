@@ -34,12 +34,12 @@ public class LoginTest extends BaseTest {
 		LogUtils.startTestCase("loginTest_MissingCreds");
 
 		loginPage.loginApplication(username, password);
-		if (username.isBlank())
+		if (username.trim().length() == 0)
 			Assert.assertTrue(loginPage.isUsernameRequiredDisplayed());
 		else
 			Assert.assertFalse(loginPage.isUsernameRequiredDisplayed());
 
-		if (password.isBlank())
+		if (password.trim().length() == 0)
 			Assert.assertTrue(loginPage.isPasswordRequiredDisplayed());
 		else
 			Assert.assertFalse(loginPage.isPasswordRequiredDisplayed());

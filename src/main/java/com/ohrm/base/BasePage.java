@@ -28,39 +28,45 @@ public class BasePage {
 	}
 
 	protected void click(WebElement el, String name) {
-		String message = "Clicking on Element: " + name;
-		ReportTestManager.logMessage(message);
-		el.click();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		WebElement visibleEl = waitForVisibility(el, 20, name);
+		if (visibleEl != null) {
+			String message = "Clicking on Element: " + name;
+			ReportTestManager.logMessage(message);
+			el.click();
+		}else {
+			String message = "Unable to Locate Element: " + name;
+			ReportTestManager.logMessage(message);
+			return;
 		}
 	}
 
 	protected void enterText(WebElement el, String text, String name) {
-		String message1 = "Clearing TextBox Element: " + name;
-		String message2 = "Entering text: \"" + text + "\" in TextBox Element: " + name;
-		ReportTestManager.logMessage(message1);
-		el.clear();
-		ReportTestManager.logMessage(message2);
-		el.sendKeys(text);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		WebElement visibleEl = waitForVisibility(el, 20, name);
+		if (visibleEl != null) {
+			String message1 = "Clearing TextBox Element: " + name;
+			String message2 = "Entering text: \"" + text + "\" in TextBox Element: " + name;
+			ReportTestManager.logMessage(message1);
+			el.clear();
+			ReportTestManager.logMessage(message2);
+			el.sendKeys(text);
+		}else {
+			String message = "Unable to Locate Element: " + name;
+			ReportTestManager.logMessage(message);
+			return;
 		}
 	}
 
 	protected boolean isDisplayed(WebElement el, String name) {
-		String message = "Waiting for Visibility of Element: " + name;
 		try {
+			String message = "Waiting for Visibility of Element: " + name;
 			ReportTestManager.logMessage(message);
 			WebElement visibleEL = waitForVisibility(el, 10, name);
 			return visibleEL.isDisplayed();
 		} catch (TimeoutException e) {
+			String message = "Unable to Locate Element: " + name;
+			ReportTestManager.logMessage(message);
+			return false;
 		}
-		return true;
 	}
 
 	protected WebElement waitForVisibility(WebElement el, long seconds, String name) {
@@ -69,10 +75,17 @@ public class BasePage {
 	}
 
 	protected boolean isAttrbutePresent(WebElement el, String name, String attributeName, String attributeValue) {
-		String message = "Verifying Element: " + name + " has attribute-name: \"" + attributeName
-				+ "\" with attribute-value: \"" + attributeValue + "\"";
-		ReportTestManager.logMessage(message);
-		return el.getAttribute(attributeName).contains(attributeValue);
+		WebElement visibleEl = waitForVisibility(el, 20, name);
+		if (visibleEl != null) {
+			String message = "Verifying Element: " + name + " has attribute-name: \"" + attributeName
+					+ "\" with attribute-value: \"" + attributeValue + "\"";
+			ReportTestManager.logMessage(message);
+			return el.getAttribute(attributeName).contains(attributeValue);
+		}else {
+			String message = "Unable to Locate Element: " + name;
+			ReportTestManager.logMessage(message);
+			return false;
+		}
 	}
 
 	public LoginPage logOut() {
